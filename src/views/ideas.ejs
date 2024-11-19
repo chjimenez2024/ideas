@@ -1,0 +1,139 @@
+<%- include('partials/_header') %>
+
+<form action="/guardarideas" method="post" class="needs-validation" novalidate>
+    <div class="p-1">
+        <h1>Ideas de Negocio</h1>
+        <div class="formulario mt-4">
+        	<fieldset class="border rounded-3">
+        		<div class="row p-2 g-3">
+        			<div class="col-md-2">
+        				<label for="grupo" class="form-label">Grupo o Empresa:</label>
+        			</div>
+            		<div class="col-md-5">
+                        <select name="grupo" id="grupo" class="form-select form-control" required>
+                            <option value="">Selecciona un grupo</option>
+                            <% if(empresas) { %>
+                                <% for(var i=0; i<empresas.length; i++){ %>
+                                    <option value="<%= empresas[i].id %>"><%= empresas[i].nombre+' '+empresas[i].integrantes %></option>
+                                <% } %>
+                            <% } %>   
+                        </select>
+                    </div>
+                </div>
+        	</fieldset>
+        	<fieldset class="border rounded-3 mt-3">
+        		<legend class="float-none w-auto">Idea de Negocio</legend>
+            	<div class="row p-2 g-3">		
+                    <div class="col-md-4">
+                        <label for="idea" class="form-label">Descripción Idea de negocio</label>
+                        <textarea class="form-control" id="idea" name="idea" required></textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="id" class="form-label">Sector Económico</label>
+                        <select name="sector" id="sector" class="form-select form-control" required>
+                            <option value="">Selecciona...</option>
+                            <% if(sector) { %>
+                                <% for(var i=0; i<sector.length; i++){ %>
+                                    <option value="<%= sector[i].id %>"><%= sector[i].descripcion %></option>
+                                <% } %>
+                            <% } %>   
+                        </select>
+                    </div>
+                     <div class="col-md-1">
+                        <label class="form-label">Puntaje</label>
+                        <input type="text" class="form-control text-center bg-warning" id="ptos" name="ptos" readonly value="0">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fecha" class="form-label">Factor de innovación</label>
+                        <select name="innovacion" id="innovacion" class="form-select form-control" required>
+                            <option value="">Selecciona un factor de innovación</option>
+                            <% if(innova) { %>
+                                <% for(var i=0; i<innova.length; i++){ %>
+                                    <option value="<%= innova[i].id %>"><%= innova[i].descripcion %></option>
+                                <% } %>
+                            <% } %>   
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="ptosfactor" class="form-label">Puntaje</label>
+                        <input type="text" class="form-control text-center bg-warning" id="ptosfactor" name="ptosfactor" readonly value="0">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="border rounded-3 mt-2">
+            	<legend class="float-none w-auto">Oportunidad Empresarial</legend>
+                <div class="row p-2 g-4">
+                	<div class="col">
+                        <label for="idea" class="form-label">Descripción Mercado Existente</label>
+                        <textarea class="form-control" id="mercado" name="mercado" rows="5" cols="5" required></textarea>
+                    </div>
+                </div>
+        	</fieldset>
+        	<fieldset class="border rounded-3 mt-2">
+                <legend class="float-none w-auto">Perfil del Emprendedor Frente a la Idea</legend>
+                <div class="row p-2 g-4">
+                    <div class="col-md-3">
+                        <label for="conocimiento" class="form-label">Conocimiento o Experiencia:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <select name="conocimiento" id="conocimiento" class="form-select form-control" required>
+                            <option value="">Selecciona un conocimiento o experiencia</option>
+                            <% if(experiencia) { %>
+                                <% for(var i=0; i<experiencia.length; i++){ %>
+                                    <option value="<%= experiencia[i].id %>"><%= experiencia[i].descripcion %></option>
+                                <% } %>
+                            <% } %>  
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="ptoscon" class="form-label">Puntaje</label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control text-center bg-warning" readonly id="ptoscon" name="ptoscon" value="0">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="border rounded-3 mt-2">
+                <div class="row p-2 g-4">
+                    <div class="col-md-1">
+                        <label for="ptosfactor" class="form-label">Ptos Total:</label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" readonly class="form-control text-center bg-danger text-light" id="ptostotal" name="ptostotal" value="0">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" id="btnTotal">Calcular Puntaje</button>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="ptosfactor" class="form-label">Fuente de Información:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" readonly class="form-control bg-danger text-light" id="fuentes" name="fuentes" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" id="grabaDatos" class="btn btn-primary ">Guardar Idea</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+<script>
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+<script src="js/funciones.js"></script>
+
+<%- include('partials/_footer'); %>

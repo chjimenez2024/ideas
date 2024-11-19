@@ -1,0 +1,38 @@
+<%- include('partials/_header') %>
+
+<h1>Cargar Aprendices</h1>
+<form action="/aprendices/cargar" method="POST" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-5">
+			<input type="file" name="file" id="file" accept=".csv, .xlsx, .xls" required class="form-control">
+		</div>
+		<div class="col-md-2">
+			<button type="submit" class="btn btn-danger">Subir archivo</button>
+		</div>
+	</div>
+</form>
+<div class="aprendices mt-5">
+	<h2>Aprendices cargados</h2>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>Identificacion</th>
+				<th>Nombres</th>
+				<th>Apellidos</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% aprendices.forEach(aprendiz => { %>
+		        <tr>
+		          <td><%= aprendiz.id %></td>
+		          <td><%= aprendiz.identificacion %></td>
+		          <td class="text-start"><%= aprendiz.nombre %></td>
+		          <td class="text-start"><%= aprendiz.apellido %></td>
+		        </tr>
+	      	<% }) %>
+		</tbody>
+	</table>
+</div>
+
+<%- include('partials/_footer'); %>

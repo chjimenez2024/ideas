@@ -1,0 +1,33 @@
+<%- include('partials/_header') %>
+
+<div class="mt-5">
+	<h2>Listado de Ideas de Negocio</h2>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>Empresa/Integrantes</th>
+				<th>Idea de Negocio</th>
+				<th>Mercado</th>
+				<th>Fuente</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% data.forEach(idea => { %>
+		        <tr>
+					<td><%= idea.id %></td>
+					<td class="text-start"><%= idea.nombre+" "+idea.integrantes %></td>
+					<td class="text-start"><%= idea.idea %></td>
+					<td class="text-start"><%= idea.mercado %></td>
+					<td class="text-start text-nowrap"><%= idea.fuentes %></td>
+					<td class="text-center">
+						<a href="/conideas/eliminar/<%= idea.id %>" title="Eliminar"><i class="bi bi-trash3"></i></a>
+					</td>
+		        </tr>
+	      	<% }) %>
+		</tbody>
+	</table>
+</div>
+
+<%- include('partials/_footer'); %>

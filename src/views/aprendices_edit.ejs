@@ -1,0 +1,24 @@
+<%- include('partials/_header') %>
+
+<div class="container mt-5">
+	<h2>Actualizar Aprendiz</h2>
+	<form action="/consulta/actualizar/<%= data.id %>" method="post">
+		<div class="row">
+			<div class="col-md-4">
+				<label for="" class="form-label">Identificacion:</label>
+				<input type="text" name="identificacion" value="<%= data.identificacion %>" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<label for="" class="form-label">Nombre:</label>
+				<input type="text" name="nombre" class="form-control" value="<%= data.nombre %>">
+			</div>
+			<div class="col-md-4">
+				<label for="" class="form-label">Apellido:</label>
+				<input type="text" name="apellido" class="form-control" value="<%= data.apellido %>">
+			</div>
+			<button type="submit" class="btn btn-primary mt-2">Actualizar Aprendiz</button>
+		</div>
+	</form>
+</div>
+
+<%- include('partials/_footer'); %>

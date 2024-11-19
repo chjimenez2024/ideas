@@ -1,0 +1,65 @@
+<%- include('partials/_header') %>
+
+<div class="row mt-2">
+	<h1>Gestión de Empresas</h1>
+	<div class="col-md-7">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nombre de la Empresa</th>
+					<th>Integrantes</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if (data){ %>
+					<% for(var i=0; i<data.length; i++){ %>
+						<tr>
+							<td><%= (i+1)  %></td>
+							<td class='text-start'><%= data[i].nombre %></td>
+							<td class='text-start'><%= data[i].integrantes %></td>
+							<td class="text-center">
+								<a href="/empresa/eliminar/<%= data[i].id %>" title="Eliminar"><i class="bi bi-trash3"></i></a>
+								<a href="/empresa/actualizar/<%= data[i].id %>" title="Editar"><i class="bi bi-pencil-square"></i></a>
+							</td>
+						</tr>
+					<% } %>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-5">
+		<div class="card">
+			<div class="card-body">
+				<form action="/empresa/add" method="POST">
+					<div class="form-group mt-2">
+						<input type="text" name="nombre" id="nombre" placeholder="Nombre de la empresa" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="" class="form-label">Integrantes</label>
+						<select name="ficha" id="ficha" class="form-select">
+							<option value="">Seleccione una ficha</option>
+							<% if(fichas){ 
+									for(var i=0;i<fichas.length; i++){ %>
+										<option value="<%= fichas[i].ficha %>"><%= fichas[i].ficha %></option>
+									<% }
+								}
+							%>
+						</select>
+					</div>
+					<div class="form-group mt-2">
+						<select name="aprendices" id="aprendices" class="form-select" multiple></select>
+					</div>
+					<div class="form-group mt-2">
+						<input type="text" name="integrantes" id="integrantes" placeholder="Integrantes" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-primary mt-2">Grabar Empresa</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="js/empresasScript.js"></script>
+<%- include('partials/_footer'); %>
